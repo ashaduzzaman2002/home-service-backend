@@ -6,7 +6,7 @@ const port = process.env.PORT || 8000
 
 // import routes
 const userRouter = require('./routes/userRoutes')
-
+app.get('/', (req, res) => res.send('Hello World'))
 app.use('/api/user', userRouter)
 
 
