@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  uuid: {
-    type: String,
-  },
   name: {
     type: String,
   },
@@ -19,6 +16,12 @@ const userSchema = new Schema({
 
   password: {
     type: String,
+  },
+
+  role: {
+    type: String,
+    enum: ["user", "technician"],
+    default: "user",
   },
 });
 
