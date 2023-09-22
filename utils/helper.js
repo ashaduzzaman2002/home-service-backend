@@ -4,4 +4,6 @@ exports.validateEmail = (email) => {
 
   // Test the email against the regex pattern
   return emailRegex.test(email);
-}
+};
+
+exports.jwtSecrect = "asdhbdfjashdjihasijhdiashdijhasjidhiuas";

@@ -23,6 +23,18 @@ const userSchema = new Schema({
     enum: ["user", "technician"],
     default: "user",
   },
+
+  location: {
+    type: String,
+  },
+
+  profession: {
+    type: String,
+  },
+  
+  experience: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);
