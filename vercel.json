@@ -1,5 +1,6 @@
 {
     "version": 2,
+<<<<<<< HEAD
     "name": "home-service-backend",
     "builds": [
         {
@@ -14,3 +15,9 @@
         }
     ]
 }
+=======
+    "name": "home_service_server",
+    "builds": [{"src": "index.js", "use": "@vercel/node"}],
+    "routes": [{"src": "/(.*)", "dest": "/index.js"}]
+}
+>>>>>>> d6b90eb178e543611f028c11682bda1c2e10a383
