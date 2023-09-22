@@ -284,3 +284,14 @@ exports.addTechnicianDetails = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+
+exports.forgotPassword = async (req, res) => {
+  const {email, password, otp} = req.body
+
+  try {
+    
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
