@@ -27,7 +27,8 @@ exports.signupWithEmail = async (req, res) => {
       return res.status(400).json({ message: "User already exist" });
     const isOtpExist = await Otp.findOne({ email });
 
-    if(!isOtpExist) return res.status(404).json({ message: "Please send otp" });
+    if (!isOtpExist)
+      return res.status(404).json({ message: "Please send otp" });
     if (isOtpExist?.otp !== otp)
       return res.status(400).json({ message: "Invalid OTP" });
 
@@ -220,7 +221,7 @@ exports.loginWithEmail = async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
-    console.log(email, password, role)
+    console.log(email, password, role);
     if (!email?.length)
       return res.status(404).json({ message: "All fields are mandatory!" });
 
@@ -269,29 +270,57 @@ exports.logout = async (req, res) => {
   }
 };
 
-
 exports.addTechnicianDetails = async (req, res) => {
-  const {email, location, profession, experience} = req.body
+  const { email, location, profession, experience } = req.body;
 
   try {
-    const updatedUser = await User.findOneAndUpdate({email}, {
-      location, profession, experience
-    })
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      {
+        location,
+        profession,
+        experience,
+      }
+    );
 
-    res.json({success: true, messgae: 'Details added successfully', user: updatedUser})
+    res.json({
+      success: true,
+      messgae: "Details added successfully",
+      user: updatedUser,
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
-}
+};
 
 exports.forgotPassword = async (req, res) => {
-  const {email, password, otp} = req.body
+  const { email, password, otp } = req.body;
 
   try {
-    
+    const userExist = await User.findOne({ email }).select("-password");
+
+    if (!userExist) return res.status(404).json({ message: "User not found" });
+
+    const isOtpExist = await Otp.findOne({ email });
+
+    if (!isOtpExist)
+      return res.status(404).json({ message: "Please send otp" });
+    if (isOtpExist?.otp !== otp)
+      return res.status(400).json({ message: "Invalid OTP" });
+
+    const user = await User.findByIdAndUpdate(userExist?._id, {
+      password,
+    });
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    await user.save();
+    res
+      .status(200)
+      .json({ success: true, message: "User updated successfully" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({ message: "Internal server error" });
   }
-}
+};
